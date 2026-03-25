@@ -107,7 +107,8 @@ lg:grid-cols-4">
             </button>
 
             <button
-              onClick={() => dispatch(removeFromWishlist(product._id))}
+              onClick={async() => {await dispatch(removeFromWishlist(product._id))
+                await dispatch(getUserWishlist())}}
               className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition"
             >
               <FaTrash />

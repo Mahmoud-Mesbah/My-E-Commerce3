@@ -44,17 +44,17 @@ export default function CategoriesSlider() {
     return (
         <div className="container mx-auto py-8">
 
-            <Slider {...settings}>
+            <Slider  {...settings}>
 
                 
 
 
 
                     {categoriesSlider?.map((cat) => (
-                        <Link to={''}>
-                        <div key={cat._id} className="px-2">
+                        <Link to={`/CategoriesSliderDetails/${cat._id}`}>
+                        <div key={cat._id} >
 
-                            <div className="bg-white shadow-md rounded-lg  text-center hover:shadow-lg transition duration-300">
+                            <div className="bg-white shadow-md px-2 rounded-lg text-center hover:shadow-lg transition duration-300">
 
                                 <img
                                     src={cat.image}
@@ -62,8 +62,8 @@ export default function CategoriesSlider() {
                                     className="w-full h-32 object-cover rounded"
                                 />
 
-                                <h3 className="mt-3 text-black hover:text-purple-500 font-semibold transition duration-300">
-                                    {cat.name}
+                                <h3 className="mt-3 text-black  by-4 hover:text-purple-500 font-semibold transition duration-300">
+                                    {cat.name?.split(' ' , 1 ).join(' ')}..
                                 </h3>
 
                             </div>

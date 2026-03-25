@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { clearCart, deleteProduct, getUserCart, updateProductCount } from '../../Features/cartSlice'
 
 export default function Cart() {
 
   const dispatch = useDispatch()
-  const { cartItems } = useSelector((state) => state.cartSlice)
+  const { cartItems  } = useSelector((state) => state.cartSlice)
 
   useEffect(() => {
     dispatch(getUserCart())
   }, [])
 
-  const totalPrice = cartItems?.reduce((acc, item) => {
+  const totalPrice = cartItems.products?.reduce((acc, item) => {
     return acc + item.price * item.count
   }, 0)
 
@@ -20,8 +21,8 @@ export default function Cart() {
 
       <div className="container mx-auto p-5 space-y-4">
 
-        {cartItems?.length > 0 ? (
-          cartItems.map((item, index) => (
+        {cartItems.products?.length > 0 ? (
+          cartItems.products.map((item, index) => (
 
             <div key={item._id + index} className="flex flex-col md:flex-row items-center justify-between gap-4  rounded-lg p-4 shadow-sm">
 
@@ -94,7 +95,7 @@ export default function Cart() {
       </div>
 
      
-      {cartItems?.length > 0 && (
+      {cartItems.products?.length > 0 && (
 
         <div className="container mx-auto mt-6 p-5  flex flex-col md:flex-row justify-between items-center gap-4">
 
@@ -103,16 +104,17 @@ export default function Cart() {
           </h2>
 
           <button
+
             className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 hover:from-blue-500 hover:via-purple-700 hover:to-pink-800 transition duration-300  text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
           >
-            Buy Now
+            <Link to={'/checkOut'}>Checkout</Link>
           </button>
 
         </div>
 
       )}
 
-      {cartItems?.length > 0 && (
+      {cartItems.product?.length > 0 && (
         <h1
           onClick={() => dispatch(clearCart())}
           className='text-xl font-bold  text-red-500 text-center hover:text-red-700 mt-4'

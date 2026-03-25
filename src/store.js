@@ -6,6 +6,7 @@ import brandsSlice from "./Features/brandsSlice";
 import categoriesSlice from "./Features/categoriesSlice";
 import categoriesSliderSlice from "./Features/categoriesSliderSlice"; 
 import wishlistSlice from "./Features/wishlistSlice";
+import userAddressesSlice from "./Features/userAddresses"
 export const store = configureStore({
     reducer:{
         userSlice ,
@@ -14,6 +15,7 @@ export const store = configureStore({
         brandsSlice,
         categoriesSlice,
         categoriesSliderSlice,
-        wishlistSlice
+        wishlistSlice,
+        userAddressesSlice
     }
 })

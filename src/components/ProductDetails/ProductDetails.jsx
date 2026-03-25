@@ -93,7 +93,7 @@ export default function ProductDetails() {
                 <FiHeart size={20} />
               </button>: <button
               onClick={()=>dispatch(addToWishlist(id))}
-                className="p-2 rounded-full bg-gray-200 hover:bg-red-100 transition text-red-500"
+                className="p-2 rounded-full bg-gray-200 hover:bg-red-100 transition text-red-700"
               >
                 <FiHeart size={20} />
               </button>}

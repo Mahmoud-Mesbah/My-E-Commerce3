@@ -64,9 +64,9 @@ export default function Navbar() {
                 <NavLink to="/cart" className={({ isActive }) => getActionClass(isActive)}>
                   <div className="relative">
                     <BsCart4 className="text-xl text-purple-400 font-bold" />
-                    {cartItems?.length > 0 && (
+                    {cartItems.products?.length > 0 && (
                       <span className="absolute -top-1 -right-1 z-10 bg-red-500 text-white text-[0.65rem] w-4 h-4 flex items-center justify-center rounded-full font-bold">
-                        {cartItems.length}
+                        {cartItems.products.length}
                       </span>
                     )}
                   </div>
@@ -130,9 +130,9 @@ export default function Navbar() {
               <NavLink to="/cart" className={({ isActive }) => getActionClass(isActive)}>
                 <div className="relative ">
                   <BsCart4 className="text-xl text-purple-400 font-bold" />
-                  {cartItems?.length > 0 && (
+                  {cartItems.products?.length > 0 && (
                     <span className="absolute -top-0 -right-1 z-10 bg-red-500 text-white text-[0.65rem] w-4 h-4 flex items-center justify-center rounded-full font-bold">
-                      {cartItems.length}
+                      {cartItems.products.length}
                     </span>
                   )}
                 </div>

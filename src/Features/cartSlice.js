@@ -3,27 +3,36 @@ import axios from "axios"
 import toast from "react-hot-toast"
 
 let initialState = {
-    cartItems: [],
+    cartItems: {
+        products: []
+      },
     loading: false,
     error: null,
+    
 }
 
 const token = localStorage.getItem('token')
 
-export let getUserCart = createAsyncThunk('cart/getUserCart', async () => {
-
-    try {
-        let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {
+export let getUserCart = createAsyncThunk(
+    'cart/getUserCart',
+    async (_, { rejectWithValue }) => {
+      try {
+        let { data } = await axios.get(
+          `https://ecommerce.routemisr.com/api/v1/cart`,
+          {
             headers: {
-                token
+              token: localStorage.getItem("token")
             }
-        })
-        console.log(data.data.products);
-        return data.data.products
-    } catch (error) {
-        console.log(error);
+          }
+        );
+  
+        return data.data;
+  
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error");
+      }
     }
-})
+  );
 export let addProductToCart = createAsyncThunk('cart/addProductToCart', async (productId) => {
     let { data } = await axios.post(
         "https://ecommerce.routemisr.com/api/v1/cart",
@@ -35,7 +44,7 @@ export let addProductToCart = createAsyncThunk('cart/addProductToCart', async (p
         })
     console.log(data.data);
 
-    return data.data.product
+    return data.data
 })
 
 
@@ -46,6 +55,7 @@ export let clearCart = createAsyncThunk('cart/clearCart', async () => {
         }
     })
     console.log(data);
+    return data.data  
 })
 
 export const deleteProduct = createAsyncThunk(
@@ -81,7 +91,7 @@ export let updateProductCount=createAsyncThunk('cart/updateProductCount', async(
 let cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers: [],
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getUserCart.pending, (state) => {
             state.loading = true
@@ -89,7 +99,7 @@ let cartSlice = createSlice({
 
         builder.addCase(getUserCart.fulfilled, (state, action) => {
             state.loading = false
-            state.cartItems = action.payload
+            state.cartItems = action.payload || { products: [] }
         })
 
         builder.addCase(getUserCart.rejected, (state, action) => {
@@ -102,7 +112,7 @@ let cartSlice = createSlice({
 
         builder.addCase(clearCart.fulfilled, (state, action) => {
             state.loading = false
-            state.cartItems = action.payload
+                state.cartItems = { products: [] }
         })
 
         builder.addCase(clearCart.rejected, (state, action) => {
@@ -126,7 +136,7 @@ let cartSlice = createSlice({
         })
         builder.addCase(deleteProduct.fulfilled, (state, action) => {
             state.loading = false
-            state.cartItems = action.payload.products
+            state.cartItems = action.payload
 
         })
         builder.addCase(deleteProduct.rejected, (state, action) => {
@@ -138,7 +148,7 @@ let cartSlice = createSlice({
         })
         builder.addCase(updateProductCount.fulfilled, (state, action) => {
             state.loading = false
-            state.cartItems = action.payload.products
+            state.cartItems = action.payload
         })
         builder.addCase(updateProductCount.rejected, (state, action) => {
             state.loading = false

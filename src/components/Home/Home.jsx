@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Banner/>
-      <CategoriesSlider/>
+      <CategoriesSlider  />
 
     
     </>

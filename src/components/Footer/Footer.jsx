@@ -17,9 +17,9 @@ export default function Footer() {
               Shop electronics, fashion, home goods, and more at unbeatable prices.
             </p>
             <div className="flex space-x-3 mt-2">
-              <Link to={"#"} className="hover:text-purple-600"><BsFacebook size={20} /></Link>
-              <Link to={"#"} className="hover:text-purple-600"><BsTwitter size={20} /></Link>
-              <Link to={"#"} className="hover:text-purple-600"><BsInstagram size={20} /></Link>
+              <Link to={"https://www.facebook.com/share/1ZRNgjyJGq/"} className="hover:text-purple-600"><BsFacebook size={20} /></Link>
+              <Link to={"https://x.com/MahmoudMes80419"} className="hover:text-purple-600"><BsTwitter size={20} /></Link>
+              <Link to={"https://www.instagram.com/m_mesbah2?igsh=MTk5eTBkc2phYm4zMg=="} className="hover:text-purple-600"><BsInstagram size={20} /></Link>
               <Link to={"#"} className="hover:text-purple-600"><BsYoutube size={20} /></Link>
             </div>
           </div>
