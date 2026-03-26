@@ -17,7 +17,7 @@ export default function CheckOut() {
   let CheckoutSession = async (shippingAddress) => {
     try {
       setLoading(true)
-      let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartItems?._id}?url=http://localhost:5173`, shippingAddress, {
+      let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartItems?._id}?url=https://mesbah-ecommerce3.vercel.app/`, shippingAddress, {
         headers: {
           token
         }
