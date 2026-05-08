@@ -5,38 +5,59 @@ import ProductCard from '../ProductCard/ProductCard';
 import { Oval } from 'react-loader-spinner';
 
 export default function Products() {
-  const [searchInput, setSearchInput] = useState(''); 
+  const [searchInput, setSearchInput] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const { products, loading } = useSelector((state) => state.productSlice)
+  const { products, loading } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProducts())
-  }, []);
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
-  const productsFilter = products.filter((product) =>
-    product.title.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  const categories = [...new Set(products.map(p => p.category?.name || p.category))];
+
+  const productsFilter = products.filter((product) => {
+    const matchesSearch =
+      product.title.toLowerCase().includes(searchInput.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === 'all' ||
+      product.category?.name === selectedCategory ||
+      product.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <>
-      {/* Search Input */}
-      <div className="relative z-0 w-full mb-5 group mx-auto max-w-5xl">
+      {/* Filters Container */}
+      <div className="mx-auto max-w-5xl px-4 mb-6 flex flex-col sm:flex-row gap-4 sm:items-center">
+
+        {/* Search */}
         <input
           type="text"
-          name="search"
-          id="search"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="block text-purple-900 py-2.5 px-0 w-full text-lg text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
           placeholder="Search Product by title"
+          className="w-full sm:flex-1 p-3 border-b-2 text-purple-900 outline-none"
         />
-        <label
-          htmlFor="search"
-          className="absolute text-sm text-purple-700 text-xl text-body duration-300 transform -translate-y-2 scale-50 top-4 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+
+        {/* Category Filter */}
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full sm:w-60 p-3 border-b-2 text-purple-900 outline-none bg-white"
         >
-        
-        </label>
+          <option value="all">All Categories</option>
+
+          {categories.map((cat, i) => (
+            <option key={i} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+
       </div>
 
       {/* Loader */}
@@ -51,12 +72,12 @@ export default function Products() {
           />
         </div>
       ) : (
-        <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {productsFilter.length > 0 ? (
             productsFilter.map((product) => (
               <ProductCard
                 key={product._id}
-                id = {product._id}
+                id={product._id}
                 price={product.price}
                 rate={product.ratingsAverage}
                 image={product.imageCover}
